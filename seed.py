@@ -25,7 +25,7 @@ numEpochsDecay = 200
 lr_list = []
 for x in range(numRuns):
 #  lr_list.append(random.randint(1*100,3*100)*1e-4*1e-2)
-    lr_list.append(1.95*1e-4)
+    lr_list.append(1.79*1e-4)
 print(lr_list)
 
 #gan mode
@@ -55,7 +55,7 @@ print(epochDecay_list)
 beta_list = []
 for x in range(numRuns):
 #  beta_list.append(random.randint(3*100,7*100)*1e-1*1e-2)
-  beta_list.append(0.428)
+  beta_list.append(0.297)
 print(beta_list)
 
 
@@ -63,7 +63,7 @@ print(beta_list)
 policy_list = []
 policy_ref = ['linear', 'step', 'plateau', 'cosine']
 for x in range(numRuns):
-  policy_list.append(policy_ref[0])
+  policy_list.append(policy_ref[3])
 print(policy_list)
 
 

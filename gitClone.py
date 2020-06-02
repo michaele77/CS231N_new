@@ -6,10 +6,7 @@ Created on Sat May 23 22:16:38 2020
 @author: ershov
 """
 #Imports
-import shutil 
 import os
-import matplotlib.pyplot as plt
-import random
 import subprocess
 
 

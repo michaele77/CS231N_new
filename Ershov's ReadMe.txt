@@ -48,6 +48,13 @@ gcloud compute scp --recurse cs231n-pytorch-project-vm:PATHTOCOPY PATHTOPASE
 find . -name ".DS_Store" -delete
 
 
+Second server: 
+gcloud beta compute ssh --zone "us-west1-b" "cs231n-3-vm" --project "neon-coast-279108"
+gcloud compute scp gitClone.py cs231n-3-v:
+gcloud compute scp --recurse cs231n-3-vm:PATHTOCOPY PATHTOPASE
+
+
+
 
 
 FOR INTERFACING WITH AWS
