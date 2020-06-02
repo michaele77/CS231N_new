@@ -19,7 +19,7 @@ print('Directory length is: ' + str(dirLen))
 if not dirLen > 5:
     'Cloning repo...'
     #Do all of the required pix2pix stuff
-    command = ['git', 'clone', 'https://github.com/michaele77/CS231N-pytorch']
+    command = ['git', 'clone', 'https://github.com/michaele77/CS231N_new']
     subprocess.run(command)
     
     # os.chdir('pytorch-CycleGAN-and-pix2pix/')
@@ -32,6 +32,6 @@ if not dirLen > 5:
 
 else:
     'Pulling repo...'
-    command = ['git', 'pull', 'https://github.com/michaele77/CS231N-pytorch']
+    command = ['git', 'pull', 'https://github.com/michaele77/CS231N_new']
     subprocess.run(command)
     
