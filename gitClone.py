@@ -16,7 +16,10 @@ import subprocess
 dirList = os.listdir()
 dirLen = len(dirList)
 print('Directory length is: ' + str(dirLen))
-if not dirLen > 5:
+
+userInput = input('Do you want to clone or pull from repo?')
+
+if userInput == 'clone':
     'Cloning repo...'
     #Do all of the required pix2pix stuff
     command = ['git', 'clone', 'https://github.com/michaele77/CS231N_new']
@@ -29,9 +32,33 @@ if not dirLen > 5:
     command = ['pip', 'install', '-r', 'requirements.txt']
     subprocess.run(command)
     
-
-else:
+elif userInput == 'pull':
+    
     'Pulling repo...'
     command = ['git', 'pull', 'https://github.com/michaele77/CS231N_new']
     subprocess.run(command)
+    
+else:
+    print('Not a valid input')
+
+
+
+#if not dirLen > 5:
+#    'Cloning repo...'
+#    #Do all of the required pix2pix stuff
+#    command = ['git', 'clone', 'https://github.com/michaele77/CS231N_new']
+#    subprocess.run(command)
+#    
+#    # os.chdir('pytorch-CycleGAN-and-pix2pix/')
+#    os.chdir('CS231N-pytorch/')
+#    
+#    
+#    command = ['pip', 'install', '-r', 'requirements.txt']
+#    subprocess.run(command)
+#    
+#
+#else:
+#    'Pulling repo...'
+#    command = ['git', 'pull', 'https://github.com/michaele77/CS231N_new']
+#    subprocess.run(command)
     
