@@ -144,7 +144,7 @@ for i in range(firstRun,numRuns):
               '--model', 'pix2pix', '--batch_size=8', '--direction', 'AtoB', '--n_epochs='+str(epoch_list[i]), \
               '--n_epochs_decay='+str(epochDecay_list[i]), '--gan_mode='+str(gan_list[i]), '--lr='+str(lr_list[i]), \
               '--beta1='+str(beta_list[i]), '--lr_policy='+str(policy_list[i]),\
-              '--save_epoch_freq=10', '--display_id', '0']
+              '--save_epoch_freq=2', '--display_id', '0']
 
   subprocess.run(command)
 

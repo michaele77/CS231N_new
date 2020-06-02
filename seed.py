@@ -14,17 +14,18 @@ import random
 import subprocess
 
 
+
 ##INPUT HERE##
 #We first want to get inputs for grid bounds and number for each type of grid
-numRuns = 20
-numEpochs = 50
-numEpochsDecay = 50
+numRuns = 1
+numEpochs = 200
+numEpochsDecay = 200
 
 #For learning rate
 lr_list = []
 for x in range(numRuns):
 #  lr_list.append(random.randint(1*100,3*100)*1e-4*1e-2)
-    lr_list.append(random.randint(1.5*100,4*100)*1e-4*1e-2)
+    lr_list.append(1.95*1e-4)
 print(lr_list)
 
 #gan mode
@@ -54,7 +55,7 @@ print(epochDecay_list)
 beta_list = []
 for x in range(numRuns):
 #  beta_list.append(random.randint(3*100,7*100)*1e-1*1e-2)
-  beta_list.append(random.randint(2*100,8*100)*1e-1*1e-2)
+  beta_list.append(0.428)
 print(beta_list)
 
 
@@ -62,8 +63,62 @@ print(beta_list)
 policy_list = []
 policy_ref = ['linear', 'step', 'plateau', 'cosine']
 for x in range(numRuns):
-  policy_list.append(policy_ref[random.randint(0,3)])
+  policy_list.append(policy_ref[0])
 print(policy_list)
+
+
+
+
+###INPUT HERE##
+##We first want to get inputs for grid bounds and number for each type of grid
+#numRuns = 20
+#numEpochs = 50
+#numEpochsDecay = 50
+#
+##For learning rate
+#lr_list = []
+#for x in range(numRuns):
+##  lr_list.append(random.randint(1*100,3*100)*1e-4*1e-2)
+#    lr_list.append(random.randint(1.5*100,4*100)*1e-4*1e-2)
+#print(lr_list)
+#
+##gan mode
+#gan_list = []
+##gan_ref = ['vanilla', 'lsgan', 'wgangp']
+#gan_ref = ['wgangp']
+#for x in range(numRuns):
+##  gan_list.append(gan_ref[random.randint(0,2)])
+#  gan_list.append(gan_ref[0])
+#print(gan_list)
+#
+##number of epochs
+#epoch_list = []
+#for x in range(numRuns):
+#  epoch_list.append(numEpochs)
+#print(epoch_list)
+#
+#
+##number of epochs decay
+#epochDecay_list = []
+#for x in range(numRuns):
+#  epochDecay_list.append(numEpochsDecay)
+#print(epochDecay_list)
+#
+#
+##beta1 size
+#beta_list = []
+#for x in range(numRuns):
+##  beta_list.append(random.randint(3*100,7*100)*1e-1*1e-2)
+#  beta_list.append(random.randint(2*100,8*100)*1e-1*1e-2)
+#print(beta_list)
+#
+#
+##policy type
+#policy_list = []
+#policy_ref = ['linear', 'step', 'plateau', 'cosine']
+#for x in range(numRuns):
+#  policy_list.append(policy_ref[random.randint(0,3)])
+#print(policy_list)
 
 
 

@@ -1,7 +1,6 @@
 .DS_Store
 debug*
 automated_tests_gcp/
-automated_tests/
 path/
 path_5000/
 datasets/

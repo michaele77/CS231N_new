@@ -47,3 +47,24 @@ gcloud compute scp --recurse cs231n-pytorch-project-vm:PATHTOCOPY PATHTOPASE
 7) If running into an issue with DS_STORE files (ie merging photos), run: (will delete DS_Store files in all sub directories from current directory) -->
 find . -name ".DS_Store" -delete
 
+
+
+
+FOR INTERFACING WITH AWS
+Instructions: https://docs.google.com/document/d/1znC6KWqs8WsXHZIMwNqPbpaEbo1rtlPRAJzquJ7Kyxo/edit 
+
+-Assuming you are starting from an empty VM instance:
+
+1) To SSH into your server, do -->
+ssh -i ~/.ssh/cs231n_aws_keypair.pem ubuntu@ec2-54-70-38-117.us-west-2.compute.amazonaws.com
+
+(note, check public IP of your thing, it might be ssh -i ~/.ssh/cs231n_aws_keypair.pem ubuntu@<PUT IP HERE>)
+
+2) Do cat README.md for more info, but for pytorch use: -->
+source activate pytorch_p36
+
+3) IF it's your first time, than scp the gitClone.py file over -->
+Use the following format: scp -i myAmazonKey.pem source destination
+
+scp -i ~/.ssh/cs231n_aws_keypair.pem gitClone.py ubuntu@ec2-54-70-38-117.us-west-2.compute.amazonaws.com:/home/ubuntu
+
