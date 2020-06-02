@@ -26,7 +26,7 @@ if userInput == 'clone':
     subprocess.run(command)
     
     # os.chdir('pytorch-CycleGAN-and-pix2pix/')
-    os.chdir('CS231N-pytorch/')
+    os.chdir('CS231N-pytorch_newDir/')
     
     
     command = ['pip', 'install', '-r', 'requirements.txt']
