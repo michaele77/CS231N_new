@@ -573,7 +573,7 @@ if int(skipUserIn) == 1:
 ##NOW IMPLEMENT IMAGE CONCTENATION##
 #Make sure to replace BOTH preStr variables and the imgDict for the tiling function!
 #dispImList = [7,69,100,138,77,1,89,193]
-    dispImList = [7,69,99,77,1,89]
+dispImList = [7,69,99,77,1,89]
 
 ifRun = input('Do you want to run tile images? [1 for yes]: ')
 
@@ -667,7 +667,7 @@ if int(inTxt) == 1:
     
     ##INPUT HERE
     maxModel = 90
-    modelSpacing = 10
+    modelSpacing = 4
     
     tileNum = 20
     
@@ -680,6 +680,15 @@ if int(inTxt) == 1:
     modelList = [str(i) for i in temp]
     
     #Define other variables we'll need for these operations
+    
+    if val:
+        testPhase = 'val'
+        testPhasePath = '/val_latest'
+        loggedDict = imgDictVal
+    else:
+        testPhase = 'test'
+        testPhasePath = '/test_latest'
+        loggedDict = imgDictTest
     
     
     
@@ -716,15 +725,6 @@ if int(inTxt) == 1:
             sinkPath = 'checkpoints/' + currModelCheckpoint + '/latest_net_G.pth'
             print('Copying over from run_' + runUserIn)
             shutil.copy2(srcPath,sinkPath)
-            
-            
-            if val:
-                testPhase = 'val'
-                testPhasePath = '/val_latest'
-            else:
-                testPhase = 'test'
-                testPhasePath = '/test_latest'
-            
         
             
             command = ['rm', '-r', 'results/' + currModelCheckpoint]
@@ -762,7 +762,7 @@ if int(inTxt) == 1:
 #    for currModel in modelList:
         
         
-    ifSave = input('Do you want to save the time tile images? [1 for yes]: ')
+    ifSave = input('Do you want to save the time tile images OR plot L1 loss? [1 for tiling, 2 for L1 loss]: ')
     saveIn = False
     if int(ifSave) == 1:
         saveIn = True
@@ -771,39 +771,149 @@ if int(inTxt) == 1:
     imgVal
         
         
+    if int(ifSave) == 1:
+        while continueRunning:
         
-    while continueRunning:
-    
-        #automated_tests_gcp/seed_x/run_x/saved_results/time_tiling/run_x_model_
-        #def timeTiling(inDict, imgNum, fullPath, inRun, preStr='val', save=False):
-        fullPathIn = subSeedPath + '/run_' + runUserIn + \
-                   '/saved_results/time_tiling/run_' + runUserIn + '_model_'
-       
-        timeTiling(imgDictVal, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
-#        timeTiling(imgDictTest, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
-        
-        ifRunagain = input('Run again? [1 for yes]: ')
-        
-        if int(ifRunagain) == 1:
-            continueRunning = True
-            whichImg = input('Which image? ')
-            imgVal = int(whichImg)
-        else:
-            continueRunning = False
+            #automated_tests_gcp/seed_x/run_x/saved_results/time_tiling/run_x_model_
+            #def timeTiling(inDict, imgNum, fullPath, inRun, preStr='val', save=False):
+            fullPathIn = subSeedPath + '/run_' + runUserIn + \
+                       '/saved_results/time_tiling/run_' + runUserIn + '_model_'
+           
+            timeTiling(imgDictVal, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
+    #        timeTiling(imgDictTest, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
             
+            ifRunagain = input('Run again? [1 for yes]: ')
             
-#Best testing images in first 20:
+            if int(ifRunagain) == 1:
+                continueRunning = True
+                whichImg = input('Which image? ')
+                imgVal = int(whichImg)
+            else:
+                continueRunning = False
+                
+                
+                #Best testing images in first 20:
 #Val:
             #0, 5, 8, 12, 19
 #Test:
             #1, 9, 11, 13, 17, 18
             
-##Plotting loss L1 loss *ASSUMING USING 1 RUN*
-inTxt = input('Do you want to plot L1 curves with same run? [1 for yes]: ')
-if int(inTxt) == 1:
-    print('Plotting...')
+            
+            
+   ##Plotting loss L1 loss *ASSUMING USING 1 RUN*         
+    elif int(ifSave) == 2:
+        #Datalist holds list of lists. Each item is for each image, each of those lists is that image training through model list
+        dataList = []
+        
+        #def timeTiling(inDict, imgNum, fullPath, inRun, preStr='val', save=False):
+        
+        #timeTiling(imgDictVal, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
+        currRun = 0
+        preStr = testPhase
+        
+        fullPathIn = subSeedPath + '/run_' + str(currRun) + \
+                       '/saved_results/time_tiling/run_' + runUserIn + '_model_'
+        imPath = fullPathIn +  str(10) + '/' + preStr + '/'
+        run_str = 'run_' + str(currRun)
+      
+        for ti in range(tileNum):
+            
+            imgList = []
+            
+            for mdl_iter in modelList:
+                imPath = fullPathIn + mdl_iter + '/' + preStr + '/'
+                
+                skPath = imPath + loggedDict[run_str][0][ti]
+                bwPath = imPath+ loggedDict[run_str][1][ti]
+                genPath = imPath + loggedDict[run_str][2][ti]
+              
+                skData = np.float32(cv2.imread(skPath, 0))
+                bwData = np.float32(cv2.imread(bwPath, 0))
+                genData = np.float32(cv2.imread(genPath, 0))
+                
+                #Now calculate the actual heurstic
+                #L1 heuristic:
+                H,W = bwData.shape
+                heurVal = np.sum((bwData - genData)) / (H*W)
+                #######
+                
+                
+#                #Custom heuristic:
+#                H,W = bwData.shape
+#                eps = 1e-7
+#                heurVal = 1 - (np.sum((bwData - genData) / ((skData - genData)+eps))) / (H*W)
+#                #######
+#                
+#                
+#                #Custom heuristic:
+#                H,W = bwData.shape
+#                eps = 1e-7
+#                heurVal = (np.sum((genData - skData) / ((bwData - skData)+1.5))) / (H*W)
+#                #######
+        
+                imgList.append(heurVal)
+                
+            
+            dataList.append(imgList)
+            
+            
+        #Plot them normally
+        axs = plt.figure(9)
+        modelInts = np.array(modelList, dtype=int)
+        
+        lowList = []
+        for currArr in dataList:
+            plt.plot(modelInts, currArr)
+            lowList.append(modelList[argmin(np.abs(np.array(meanList)))])
+        
+        bestModel = max(set(lowList), key=lowList.count)
+        plt.xlabel('Iteration', fontsize = 10)
+        plt.ylabel('Generated Error', fontsize = 10)
+        plt.title('Generator Errors over Models, Best Model = ' + bestModel, \
+                  fontsize = 10)
+        plt.xticks(modelInts)
+        
+        plt.grid()
+        tempLen = str(len(os.listdir(isPath + '/')))
+        plt.savefig(isPath + '/err-' + tempLen + '_' + 'run_0_' + \
+                    testPhase + '_imageNum_' + str(tileNum), dpi=800)
+        
+        #Now plot an average loss per point
+        
+        axs = plt.figure(10)
+        
+        lowList = []
+        meanList = []
+        dataArr = np.array(dataList)
+        l,w = dataArr.shape
+        meanList = list(np.sum(dataArr,axis=0)/l)
+            
+        plt.plot(modelInts, meanList)
+        bestModel = modelList[argmin(np.abs(np.array(meanList)))]
+
+        plt.xlabel('Iteration', fontsize = 10)
+        plt.ylabel('Generated Error', fontsize = 10)
+        plt.title('Averaged Generator Errors over Models, Best Model = ' + bestModel, \
+                  fontsize = 10)
+        plt.xticks(modelInts)
+        
+        plt.grid()
+        tempLen = str(len(os.listdir(isPath + '/')))
+        plt.savefig(isPath + '/err-' + tempLen + '_AVG_' + 'run_0_' + \
+                    testPhase + '_imageNum_' + str(tileNum), dpi=800)
+        
+            
+            
+        
+                
+            
+            
+            
+            
+
+
+
     
-    for i in range(tileNum):
         
         
         
