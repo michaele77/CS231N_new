@@ -318,7 +318,7 @@ def calcHeuristic(inDict, runID, imgNum, subpath, preStr='val'):
 txtIn = input('What seed do you want to test from? ')
 seedNum = int(txtIn)
 
-pathToData = 'path_5000/to/data'
+pathToData = 'path/to/data'
 ####INPUT HERE####
 subSeedPath = 'automated_tests_gcp/seed_' + str(seedNum)
 seedPath = 'automated_tests_gcp/seed_' + str(seedNum) + '/test_result'
@@ -572,7 +572,8 @@ if int(skipUserIn) == 1:
     
 ##NOW IMPLEMENT IMAGE CONCTENATION##
 #Make sure to replace BOTH preStr variables and the imgDict for the tiling function!
-dispImList = [7,69,100,138,77,1,89,193]
+#dispImList = [7,69,100,138,77,1,89,193]
+    dispImList = [7,69,99,77,1,89]
 
 ifRun = input('Do you want to run tile images? [1 for yes]: ')
 
@@ -657,6 +658,7 @@ if int(inTxt) == 1:
         
     
 ##IMPLEMENT SIDE-BY-SIDE PLOTTING##
+    
 inTxt = input('Do you want tile image transform flow? [1 for yes]: ')
 if int(inTxt) == 1:
     print('Tiling images...')
@@ -664,12 +666,12 @@ if int(inTxt) == 1:
     
     
     ##INPUT HERE
-    maxModel = 100
+    maxModel = 90
     modelSpacing = 10
     
     tileNum = 20
     
-    val = False
+    val = True
     imgVal = 10
     ##INPUT HERE
     
@@ -777,8 +779,8 @@ if int(inTxt) == 1:
         fullPathIn = subSeedPath + '/run_' + runUserIn + \
                    '/saved_results/time_tiling/run_' + runUserIn + '_model_'
        
-#        timeTiling(imgDictVal, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
-        timeTiling(imgDictTest, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
+        timeTiling(imgDictVal, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
+#        timeTiling(imgDictTest, imgVal, fullPathIn, int(runUserIn), preStr=testPhase, save=saveIn)
         
         ifRunagain = input('Run again? [1 for yes]: ')
         
@@ -795,6 +797,14 @@ if int(inTxt) == 1:
             #0, 5, 8, 12, 19
 #Test:
             #1, 9, 11, 13, 17, 18
+            
+##Plotting loss L1 loss *ASSUMING USING 1 RUN*
+inTxt = input('Do you want to plot L1 curves with same run? [1 for yes]: ')
+if int(inTxt) == 1:
+    print('Plotting...')
+    
+    for i in range(tileNum):
+        
         
         
         

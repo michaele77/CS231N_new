@@ -138,8 +138,10 @@ for i in range(firstRun,numRuns):
 #             '--beta1='+str(beta_list[i]), '--lr_policy='+str(policy_list[i]), '--gpu_ids', '-1']
 
    #To train on GPUs:
-#   python train.py --dataroot path/to/data --name run_test --model pix2pix --batch_size=8 --direction AtoB
-             
+#   python train.py --dataroot path/to/data --name run_0 --model pix2pix --batch_size=8 --direction AtoB --n_epochs=200 --n_epochs_decay=200 --gan_mode=wgangp --lr=0.000179 --beta1=0.297 --lr_policy=cosine --save_epoch_freq=5 --display_id=0 --save_latest_freq=25000 --continue_train --epoch_count=17
+#   python train.py --dataroot path/to/data --name run_0 --model pix2pix --batch_size=8 --direction AtoB --n_epochs=200 --n_epochs_decay=200 --gan_mode=wgangp --lr=0.000195 --beta1=0.428 --lr_policy=linear --save_epoch_freq=5 --display_id=0 --save_latest_freq=25000 --continue_train --epoch_count=47
+#   python train.py --dataroot path/to/data --name run_0 --model pix2pix --batch_size=8 --direction AtoB --n_epochs=200 --n_epochs_decay=200 --gan_mode=wgangp --lr=0.000195 --beta1=0.428 --lr_policy=linear --save_epoch_freq=2 --display_id=0 --save_latest_freq=25000 --continue_train --epoch_count=45
+
   command = ['python', 'train.py', '--dataroot', 'path/to/data/', '--name', runName, \
               '--model', 'pix2pix', '--batch_size=8', '--direction', 'AtoB', '--n_epochs='+str(epoch_list[i]), \
               '--n_epochs_decay='+str(epochDecay_list[i]), '--gan_mode='+str(gan_list[i]), '--lr='+str(lr_list[i]), \
