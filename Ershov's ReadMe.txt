@@ -50,8 +50,12 @@ find . -name ".DS_Store" -delete
 
 Second server: 
 gcloud beta compute ssh --zone "us-west1-b" "cs231n-3-vm" --project "neon-coast-279108"
-gcloud compute scp gitClone.py cs231n-3-vm:
-gcloud compute scp --recurse cs231n-3-vm:PATHTOCOPY PATHTOPASE
+gcloud compute scp --zone "us-west1-b" --project "neon-coast-279108" gitClone.py cs231n-3-vm:
+gcloud compute scp --zone "us-west1-b" --project "neon-coast-279108" --recurse cs231n-3-vm:PATHTOCOPY PATHTOPASE
+
+gcloud compute scp --zone "us-west1-b" --project "neon-coast-279108" --recurse path cs231n-3-vm:CS231N_new/
+
+
 
 
 

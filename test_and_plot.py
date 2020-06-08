@@ -380,9 +380,9 @@ runNumList = [int(i[4:]) for i in runDirList]
 ####INPUT HERE####
 #chosenModel = '5'
 #For the latest model, use:
-chosenModel = 50
-valNum = 200
-testNum = 200
+chosenModel = 60
+valNum = 1500
+testNum = 1500
 ####INPUT HERE####
 
 modelStr = str(chosenModel) + '_net_G.pth'
@@ -666,10 +666,10 @@ if int(inTxt) == 1:
     
     
     ##INPUT HERE
-    maxModel = 90
+    maxModel = 92
     modelSpacing = 4
     
-    tileNum = 20
+    tileNum = 1500
     
     val = True
     imgVal = 10
@@ -863,15 +863,42 @@ if int(inTxt) == 1:
         
         lowList = []
         for currArr in dataList:
-            plt.plot(modelInts, currArr)
+#            plt.scatter(modelInts, currArr)
             lowList.append(modelList[argmin(np.abs(np.array(meanList)))])
+        altList = np.array(dataList).T.tolist()
+        bp = plt.boxplot(altList, patch_artist=True)
+        
+        for box in bp['boxes']:
+            # change outline color
+            box.set( color='#7570b3', linewidth=2)
+            # change fill color
+            box.set( facecolor = '#1b9e77' )
+        
+        ## change color and linewidth of the whiskers
+        for whisker in bp['whiskers']:
+            whisker.set(color='#7570b3', linewidth=2)
+        
+        ## change color and linewidth of the caps
+        for cap in bp['caps']:
+            cap.set(color='#7570b3', linewidth=2)
+        
+        ## change color and linewidth of the medians
+        for median in bp['medians']:
+            median.set(color='#b2df8a', linewidth=2)
+        
+        ## change the style of fliers and their fill
+        for flier in bp['fliers']:
+            flier.set(marker='o', color='#e7298a', alpha=0.5)
+                      
+                      
         
         bestModel = max(set(lowList), key=lowList.count)
         plt.xlabel('Iteration', fontsize = 10)
         plt.ylabel('Generated Error', fontsize = 10)
         plt.title('Generator Errors over Models, Best Model = ' + bestModel, \
                   fontsize = 10)
-        plt.xticks(modelInts)
+        
+        plt.xticks(np.arange(len(modelInts)) + 1,modelInts)
         
         plt.grid()
         tempLen = str(len(os.listdir(isPath + '/')))
